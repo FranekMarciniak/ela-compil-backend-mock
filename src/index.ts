@@ -21,12 +21,12 @@ app.use(function (req, res, next) {
 
 ws.on("connection", function (ws) {
   console.log("Client Connected");
+  // setInterval(() => ws.send("ddddd"), 5000);
 
   ws.on("close", function close() {
     console.log("Client Disconnected");
   });
 });
-
 app.get("/api/v1/devices", (req, res) => {
   console.log("first");
   if (!data) return res.status(500);
@@ -34,7 +34,12 @@ app.get("/api/v1/devices", (req, res) => {
 });
 app.get("/api/v1/devices/:id", (req, res) => {
   if (!data) return res.status(500);
-  res.status(200).json(data.SmartDevicesList);
+  const deviceToReturn = data.SmartDeviceDetailsList.find(
+    (device: any) => device.id === req.params.id
+  );
+  if (!deviceToReturn)
+    return res.status(404).json({ message: "Device not found" });
+  res.status(200).json(deviceToReturn);
 });
 const server = app.listen(3080);
 

@@ -25,5 +25,39 @@
       "connectionState": "poorConnection"
     }
   ],
-  "SmartDeviceDetailsList": []
+  "SmartDeviceDetailsList": [
+    {
+      "id": "1",
+      "type": "bulb",
+      "name": "Living room lightbulb",
+      "connectionState": "connected",
+      "isTurnedOn": true,
+      "brightness": 69,
+      "color": ""
+    },
+    {
+      "type": "outlet",
+      "id": "2",
+      "name": "Living room outlet",
+      "connectionState": "connected",
+      "isTurnedOn": true,
+      "powerConsumption": 5
+    },
+    {
+      "type": "bulb",
+      "id": "3",
+      "name": "Bathroom lightbulb",
+      "connectionState": "disconnected",
+      "isTurnedOn": false,
+      "brightness": 44,
+      "color": ""
+    },
+    {
+      "type": "temperatureSensor",
+      "id": "4",
+      "name": "Home thermostat",
+      "connectionState": "poorConnection",
+      "temprature": 21
+    }
+  ]
 }

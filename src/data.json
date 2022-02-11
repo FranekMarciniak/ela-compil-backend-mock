@@ -1,0 +1,29 @@
+{
+  "SmartDevicesList": [
+    {
+      "type": "bulb",
+      "id": "1",
+      "name": "Living room lightbulb",
+      "connectionState": "connected"
+    },
+    {
+      "type": "outlet",
+      "id": "2",
+      "name": "Living room outlet",
+      "connectionState": "connected"
+    },
+    {
+      "type": "bulb",
+      "id": "3",
+      "name": "Bathroom lightbulb",
+      "connectionState": "disconnected"
+    },
+    {
+      "type": "temperatureSensor",
+      "id": "4",
+      "name": "Home thermostat",
+      "connectionState": "poorConnection"
+    }
+  ],
+  "SmartDeviceDetailsList": []
+}

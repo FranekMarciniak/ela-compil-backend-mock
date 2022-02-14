@@ -1,7 +1,7 @@
 import Ws from "ws";
 import express from "express";
 import ip from "ip";
-import _ from "lodash";
+import _, { forEach } from "lodash";
 
 const app = express();
 const cors = require("cors");
@@ -29,7 +29,7 @@ const simulateWS = (ws: any) => {
   setTimeout(() => {
     data.SmartDevicesList[0].connectionState = "poorConnection";
     ws.send(JSON.stringify(data.SmartDeviceDetailsList[0]));
-  }, 3000);
+  }, 4500);
   setTimeout(() => {
     data.SmartDeviceDetailsList[0].brightness = 12;
     ws.send(JSON.stringify(data.SmartDeviceDetailsList[0]));
@@ -50,17 +50,22 @@ const simulateWS = (ws: any) => {
     data.SmartDeviceDetailsList[1].powerConsumption = 11;
     ws.send(JSON.stringify(data.SmartDeviceDetailsList[1]));
   }, 7800);
-  setTimeout(() => {
-    data = _.cloneDeep(dataFile);
-    ws.send(JSON.stringify(data.SmartDeviceDetailsList[0]));
-  }, 10000);
+  setTimeout(() => {}, 10000);
 };
 
 ws.on("connection", function (ws) {
   console.log("Client Connected");
   simulateWS(ws);
+  setInterval(() => {
+    data.SmartDeviceDetailsList[2].brightness = Math.floor(Math.random() * 100);
+    ws.send(JSON.stringify(data.SmartDeviceDetailsList[2]));
+  }, 5000);
   ws.on("close", function close() {
     console.log("Client Disconnected");
+    data = _.cloneDeep(dataFile);
+    data.SmartDeviceDetailsList.forEach((device: any) => {
+      ws.send(JSON.stringify(device));
+    });
   });
 });
 

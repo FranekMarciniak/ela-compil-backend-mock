@@ -21,8 +21,11 @@ app.use(function (req, res, next) {
   next();
 });
 
-ws.on("connection", function (ws) {
-  console.log("Client Connected");
+const simulateWS = (ws: any) => {
+  setTimeout(() => {
+    data.SmartDevicesList[2].connectionState = "connected";
+    ws.send(JSON.stringify(data.SmartDeviceDetailsList[2]));
+  }, 1500);
   setTimeout(() => {
     data.SmartDevicesList[0].connectionState = "poorConnection";
     ws.send(JSON.stringify(data.SmartDeviceDetailsList[0]));
@@ -36,14 +39,31 @@ ws.on("connection", function (ws) {
     ws.send(JSON.stringify(data.SmartDeviceDetailsList[0]));
   }, 7000);
   setTimeout(() => {
+    data.SmartDeviceDetailsList[1].powerConsumption = 6;
+    ws.send(JSON.stringify(data.SmartDeviceDetailsList[1]));
+  }, 7300);
+  setTimeout(() => {
+    data.SmartDeviceDetailsList[1].powerConsumption = 8;
+    ws.send(JSON.stringify(data.SmartDeviceDetailsList[1]));
+  }, 7400);
+  setTimeout(() => {
+    data.SmartDeviceDetailsList[1].powerConsumption = 11;
+    ws.send(JSON.stringify(data.SmartDeviceDetailsList[1]));
+  }, 7800);
+  setTimeout(() => {
     data = _.cloneDeep(dataFile);
-    console.log(dataFile);
     ws.send(JSON.stringify(data.SmartDeviceDetailsList[0]));
   }, 10000);
+};
+
+ws.on("connection", function (ws) {
+  console.log("Client Connected");
+  simulateWS(ws);
   ws.on("close", function close() {
     console.log("Client Disconnected");
   });
 });
+
 app.get("/api/v1/devices", (req, res) => {
   // console.log("first");
   if (!data) return res.status(400).send("No devices found");

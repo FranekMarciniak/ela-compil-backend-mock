@@ -1,13 +1,14 @@
 import Ws from "ws";
 import express from "express";
 import ip from "ip";
+import _ from "lodash";
 
 const app = express();
 const cors = require("cors");
 const ipAddress = ip.address();
-const data = require("./data.json");
+const dataFile = require("./data.json");
 
-console.log(ipAddress, data);
+let data = _.cloneDeep(dataFile);
 const ws = new Ws.Server({ noServer: true, path: "/api/v1/refresh" });
 
 app.use(function (req, res, next) {
@@ -21,19 +22,34 @@ app.use(function (req, res, next) {
 
 ws.on("connection", function (ws) {
   console.log("Client Connected");
-  // setInterval(() => ws.send("ddddd"), 5000);
-
+  setTimeout(() => {
+    data.SmartDevicesList[0].connectionState = "poorConnection";
+    ws.send(JSON.stringify(data.SmartDeviceDetailsList[0]));
+  }, 3000);
+  setTimeout(() => {
+    data.SmartDeviceDetailsList[0].brightness = 12;
+    ws.send(JSON.stringify(data.SmartDeviceDetailsList[0]));
+  }, 5000);
+  setTimeout(() => {
+    data.SmartDeviceDetailsList[0].brightness = 50;
+    ws.send(JSON.stringify(data.SmartDeviceDetailsList[0]));
+  }, 7000);
+  setTimeout(() => {
+    data = _.cloneDeep(dataFile);
+    console.log(dataFile);
+    ws.send(JSON.stringify(data.SmartDeviceDetailsList[0]));
+  }, 10000);
   ws.on("close", function close() {
     console.log("Client Disconnected");
   });
 });
 app.get("/api/v1/devices", (req, res) => {
-  console.log("first");
-  if (!data) return res.status(500);
+  // console.log("first");
+  if (!data) return res.status(400).send("No devices found");
   res.status(200).json(data.SmartDevicesList);
 });
 app.get("/api/v1/devices/:id", (req, res) => {
-  if (!data) return res.status(500);
+  if (!data) return res.status(404).send("No device found");
   const deviceToReturn = data.SmartDeviceDetailsList.find(
     (device: any) => device.id === req.params.id
   );

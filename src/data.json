@@ -33,7 +33,7 @@
       "connectionState": "connected",
       "isTurnedOn": true,
       "brightness": 69,
-      "color": ""
+      "color": "#E6E6FA"
     },
     {
       "type": "outlet",
@@ -50,14 +50,14 @@
       "connectionState": "disconnected",
       "isTurnedOn": false,
       "brightness": 44,
-      "color": ""
+      "color": "#76EEC6"
     },
     {
       "type": "temperatureSensor",
       "id": "4",
       "name": "Home thermostat",
       "connectionState": "poorConnection",
-      "temprature": 21
+      "temperature": 21
     }
   ]
 }

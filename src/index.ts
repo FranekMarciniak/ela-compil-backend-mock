@@ -10,6 +10,7 @@ const dataFile = require("../data.json");
 
 let data = _.cloneDeep(dataFile);
 const ws = new Ws.Server({ noServer: true, path: "/api/v1/refresh" });
+const PORT = process.env.PORT || 4000;
 
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -57,7 +58,7 @@ app.get("/api/v1/devices/:id", (req, res) => {
     return res.status(404).json({ message: "Device not found" });
   res.status(200).json(deviceToReturn);
 });
-const server = app.listen(3080);
+const server = app.listen(PORT, () => console.log(ipAddress, PORT));
 
 app.get("/", function (req, res) {
   res.send("hello world");

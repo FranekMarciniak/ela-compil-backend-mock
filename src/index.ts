@@ -24,10 +24,12 @@ app.use(function (req, res, next) {
 const simulateWS = (ws: any) => {
   setTimeout(() => {
     data.SmartDevicesList[2].connectionState = "connected";
+    data.SmartDeviceDetailsList[2].connectionState = "connected";
     ws.send(JSON.stringify(data.SmartDeviceDetailsList[2]));
   }, 1500);
   setTimeout(() => {
     data.SmartDevicesList[0].connectionState = "poorConnection";
+    data.SmartDeviceDetailsList[0].connectionState = "poorConnection";
     ws.send(JSON.stringify(data.SmartDeviceDetailsList[0]));
   }, 4500);
   setTimeout(() => {
@@ -88,6 +90,7 @@ const server = app.listen(PORT, () => console.log(ipAddress, PORT));
 app.get("/", function (req, res) {
   res.send("hello world");
 });
+
 server.on("upgrade", (request, socket, head) => {
   ws.handleUpgrade(request, socket, head, (socket) => {
     ws.emit("connection", socket, request);

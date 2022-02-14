@@ -6,7 +6,7 @@ import _ from "lodash";
 const app = express();
 const cors = require("cors");
 const ipAddress = ip.address();
-const dataFile = require("./data.json");
+const dataFile = require("../data.json");
 
 let data = _.cloneDeep(dataFile);
 const ws = new Ws.Server({ noServer: true, path: "/api/v1/refresh" });

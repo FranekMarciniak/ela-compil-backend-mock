@@ -23,15 +23,45 @@ app.use(function (req, res, next) {
 
 const simulateWS = (ws: any) => {
   setTimeout(() => {
+    data.SmartDevicesList[3].connectionState = "connected";
+    data.SmartDeviceDetailsList[3].connectionState = "connected";
+    ws.send(JSON.stringify(data.SmartDeviceDetailsList[3]));
+  }, 1000);
+  setTimeout(() => {
     data.SmartDevicesList[2].connectionState = "connected";
     data.SmartDeviceDetailsList[2].connectionState = "connected";
     ws.send(JSON.stringify(data.SmartDeviceDetailsList[2]));
   }, 1500);
   setTimeout(() => {
+    data.SmartDevicesList[3].connectionState = "poorConnection";
+    data.SmartDeviceDetailsList[3].connectionState = "poorConnection";
+    ws.send(JSON.stringify(data.SmartDeviceDetailsList[3]));
+  }, 2000);
+  setTimeout(() => {
+    data.SmartDevicesList[1].connectionState = "poorConnection";
+    data.SmartDeviceDetailsList[1].connectionState = "poorConnection";
+    ws.send(JSON.stringify(data.SmartDeviceDetailsList[1]));
+  }, 3000);
+  setTimeout(() => {
+    data.SmartDevicesList[1].connectionState = "connected";
+    data.SmartDeviceDetailsList[1].connectionState = "connected";
+    ws.send(JSON.stringify(data.SmartDeviceDetailsList[1]));
+  }, 4000);
+  setTimeout(() => {
     data.SmartDevicesList[0].connectionState = "poorConnection";
     data.SmartDeviceDetailsList[0].connectionState = "poorConnection";
     ws.send(JSON.stringify(data.SmartDeviceDetailsList[0]));
   }, 4500);
+  setTimeout(() => {
+    data.SmartDevicesList[2].connectionState = "disconnected";
+    data.SmartDeviceDetailsList[2].connectionState = "disconnected";
+    ws.send(JSON.stringify(data.SmartDeviceDetailsList[2]));
+  }, 5000);
+  setTimeout(() => {
+    data.SmartDevicesList[2].connectionState = "connected";
+    data.SmartDeviceDetailsList[2].connectionState = "connected";
+    ws.send(JSON.stringify(data.SmartDeviceDetailsList[2]));
+  }, 6000);
   setTimeout(() => {
     data.SmartDeviceDetailsList[0].brightness = 12;
     ws.send(JSON.stringify(data.SmartDeviceDetailsList[0]));
@@ -52,48 +82,16 @@ const simulateWS = (ws: any) => {
     data.SmartDeviceDetailsList[1].powerConsumption = 11;
     ws.send(JSON.stringify(data.SmartDeviceDetailsList[1]));
   }, 7800);
-  setTimeout(() => {}, 10000);
 };
 
 ws.on("connection", function (ws) {
   console.log("Client Connected");
-  simulateWS(ws);
   setInterval(() => {
     data.SmartDeviceDetailsList[2].brightness = Math.floor(Math.random() * 100);
     ws.send(JSON.stringify(data.SmartDeviceDetailsList[2]));
   }, 5000);
-  setInterval(() => {
-    setTimeout(() => {
-      data.SmartDevicesList[3].connectionState = "connected";
-      data.SmartDeviceDetailsList[3].connectionState = "connected";
-      ws.send(JSON.stringify(data.SmartDeviceDetailsList[3]));
-    }, 1000);
-    setTimeout(() => {
-      data.SmartDevicesList[3].connectionState = "poorConnection";
-      data.SmartDeviceDetailsList[3].connectionState = "poorConnection";
-      ws.send(JSON.stringify(data.SmartDeviceDetailsList[3]));
-    }, 2000);
-    setTimeout(() => {
-      data.SmartDevicesList[1].connectionState = "poorConnection";
-      data.SmartDeviceDetailsList[1].connectionState = "poorConnection";
-      ws.send(JSON.stringify(data.SmartDeviceDetailsList[1]));
-    }, 3000);
-    setTimeout(() => {
-      data.SmartDevicesList[1].connectionState = "connected";
-      data.SmartDeviceDetailsList[1].connectionState = "connected";
-      ws.send(JSON.stringify(data.SmartDeviceDetailsList[1]));
-    }, 4000);
-    setTimeout(() => {
-      data.SmartDevicesList[2].connectionState = "disconnected";
-      data.SmartDeviceDetailsList[2].connectionState = "disconnected";
-      ws.send(JSON.stringify(data.SmartDeviceDetailsList[2]));
-    }, 5000);
-    setTimeout(() => {
-      data.SmartDevicesList[2].connectionState = "connected";
-      data.SmartDeviceDetailsList[2].connectionState = "connected";
-      ws.send(JSON.stringify(data.SmartDeviceDetailsList[2]));
-    }, 6000);
-  }, 6000);
+  simulateWS(ws);
+  setInterval(() => simulateWS(ws), 8000);
   ws.on("close", function close() {
     console.log("Client Disconnected");
     data = _.cloneDeep(dataFile);

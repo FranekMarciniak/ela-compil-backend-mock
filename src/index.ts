@@ -62,6 +62,28 @@ ws.on("connection", function (ws) {
     data.SmartDeviceDetailsList[2].brightness = Math.floor(Math.random() * 100);
     ws.send(JSON.stringify(data.SmartDeviceDetailsList[2]));
   }, 5000);
+  setInterval(() => {
+    setTimeout(() => {
+      data.SmartDevicesList[3].connectionState = "connected";
+      data.SmartDeviceDetailsList[3].connectionState = "connected";
+      ws.send(JSON.stringify(data.SmartDeviceDetailsList[3]));
+    }, 2000);
+    setTimeout(() => {
+      data.SmartDevicesList[3].connectionState = "poorConnection";
+      data.SmartDeviceDetailsList[3].connectionState = "poorConnection";
+      ws.send(JSON.stringify(data.SmartDeviceDetailsList[3]));
+    }, 4000);
+    setTimeout(() => {
+      data.SmartDevicesList[1].connectionState = "poorConnection";
+      data.SmartDeviceDetailsList[1].connectionState = "poorConnection";
+      ws.send(JSON.stringify(data.SmartDeviceDetailsList[1]));
+    }, 6000);
+    setTimeout(() => {
+      data.SmartDevicesList[1].connectionState = "connected";
+      data.SmartDeviceDetailsList[1].connectionState = "poorConnection";
+      ws.send(JSON.stringify(data.SmartDeviceDetailsList[1]));
+    }, 8000);
+  }, 10000);
   ws.on("close", function close() {
     console.log("Client Disconnected");
     data = _.cloneDeep(dataFile);

@@ -67,23 +67,33 @@ ws.on("connection", function (ws) {
       data.SmartDevicesList[3].connectionState = "connected";
       data.SmartDeviceDetailsList[3].connectionState = "connected";
       ws.send(JSON.stringify(data.SmartDeviceDetailsList[3]));
-    }, 2000);
+    }, 1000);
     setTimeout(() => {
       data.SmartDevicesList[3].connectionState = "poorConnection";
       data.SmartDeviceDetailsList[3].connectionState = "poorConnection";
       ws.send(JSON.stringify(data.SmartDeviceDetailsList[3]));
-    }, 4000);
+    }, 2000);
     setTimeout(() => {
       data.SmartDevicesList[1].connectionState = "poorConnection";
       data.SmartDeviceDetailsList[1].connectionState = "poorConnection";
       ws.send(JSON.stringify(data.SmartDeviceDetailsList[1]));
-    }, 6000);
+    }, 3000);
     setTimeout(() => {
       data.SmartDevicesList[1].connectionState = "connected";
-      data.SmartDeviceDetailsList[1].connectionState = "poorConnection";
+      data.SmartDeviceDetailsList[1].connectionState = "connected";
       ws.send(JSON.stringify(data.SmartDeviceDetailsList[1]));
-    }, 8000);
-  }, 10000);
+    }, 4000);
+    setTimeout(() => {
+      data.SmartDevicesList[2].connectionState = "disconnected";
+      data.SmartDeviceDetailsList[2].connectionState = "disconnected";
+      ws.send(JSON.stringify(data.SmartDeviceDetailsList[2]));
+    }, 5000);
+    setTimeout(() => {
+      data.SmartDevicesList[2].connectionState = "connected";
+      data.SmartDeviceDetailsList[2].connectionState = "connected";
+      ws.send(JSON.stringify(data.SmartDeviceDetailsList[2]));
+    }, 6000);
+  }, 6000);
   ws.on("close", function close() {
     console.log("Client Disconnected");
     data = _.cloneDeep(dataFile);
